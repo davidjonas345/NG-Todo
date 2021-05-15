@@ -16,8 +16,7 @@ import {TodoService} from "./todo.service";
                 <br><br>
                 <div *ngIf="todoControl?.invalid && todoControl?.touched">
                     <p *ngIf="todoControl?.errors?.required" style="color: red; font-size: 10px; margin-top: -15px ">
-                        Todo have
-                        to be at last 6 character! </p>
+                        Todo have to be at last 6 character! </p>
                 </div>
             </div>
         </form>
@@ -27,7 +26,7 @@ import {TodoService} from "./todo.service";
                 <input type="checkbox">
                 {{todo.title}}
                 <button (click)="deleteItem(todo.id)">Delete</button>
-                <button>Edit</button>
+                <button routerLink="/edit/{{todo.id}}">Edit</button>
             </li>
             </div>
         </ul>
@@ -40,7 +39,7 @@ export class TodoListComponent implements OnInit {
 
     todos: Todo[] = [];
     hasError = false;
-    todoId: number | undefined;
+
 
     todoForm: FormGroup = new FormGroup({
         todo: new FormControl(null,
@@ -72,6 +71,7 @@ export class TodoListComponent implements OnInit {
         console.log(this.todos);
         this.todoService.addTodo(newTodo).subscribe(todo =>
             console.log(todo));
+        this.todoForm.reset();
     }
 
     get todoControl(): AbstractControl | null {
